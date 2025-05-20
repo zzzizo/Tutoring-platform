@@ -1,0 +1,133 @@
+import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+
+const LoginPage = () => {
+  const navigate = useNavigate();
+  
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rememberMe: false
+  });
+  
+  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    
+    setError('');
+    setIsLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      // For demo purposes, accept any email/password
+      localStorage.setItem('authToken', 'demo-token-12345');
+      navigate('/dashboard');
+      setIsLoading(false);
+    }, 1500);
+  };
+  
+  return (
+    <section className="login-section py-5">
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={8} lg={6} xl={5}>
+            <Card className="border-0 shadow-sm">
+              <Card.Body className="p-4 p-md-5">
+                <h1 className="text-center mb-4">Log In</h1>
+                
+                {error && (
+                  <Alert variant="danger" className="mb-4">
+                    {error}
+                  </Alert>
+                )}
+                
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="Enter your email"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid email.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      placeholder="Enter your password"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide your password.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <div className="d-flex justify-content-between mb-4">
+                    <Form.Group controlId="rememberMe">
+                      <Form.Check
+                        type="checkbox"
+                        name="rememberMe"
+                        label="Remember me"
+                        checked={formData.rememberMe}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                    <Link to="/forgot-password" className="text-decoration-none">
+                      Forgot password?
+                    </Link>
+                  </div>
+                  <div className="d-grid mb-4">
+                    <Button 
+                      variant="primary" 
+                      type="submit" 
+                      size="lg"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Logging in...' : 'Log In'}
+                    </Button>
+                  </div>
+                  <div className="text-center">
+                    <p className="mb-0">
+                      Don't have an account? <Link to="/signup" className="text-decoration-none">Sign up</Link>
+                    </p>
+                  </div>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </section>
+  );
+};
+
+export default LoginPage;
+
+

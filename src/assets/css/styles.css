@@ -1,0 +1,207 @@
+/* Global styles */
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+.main-content {
+  min-height: calc(100vh - 200px);
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: #4A6FDE;
+  border-color: #4A6FDE;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #3A58B8;
+  border-color: #3A58B8;
+}
+
+.btn-outline-primary {
+  color: #4A6FDE;
+  border-color: #4A6FDE;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+  background-color: #4A6FDE;
+  border-color: #4A6FDE;
+}
+
+/* Card styling */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Progress bar styling */
+.progress-bar {
+  background-color: #4A6FDE;
+}
+
+/* Popular plan styling */
+.popular-plan {
+  border: 2px solid #4A6FDE !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.popular-badge {
+  position: absolute;
+  top: 10px;
+  right: -30px;
+  background-color: #4A6FDE;
+  color: white;
+  padding: 5px 30px;
+  transform: rotate(45deg);
+  font-size: 0.8rem;
+  font-weight: 500;
+  z-index: 1;
+}
+
+/* Pricing page specific styles */
+.price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4A6FDE;
+}
+
+.billing-period {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* Dashboard styles */
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+/* Home page styles */
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.step-number {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #4A6FDE;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Testimonial carousel */
+.testimonial-carousel .carousel-indicators {
+  bottom: -50px;
+}
+
+.testimonial-carousel .carousel-indicators button {
+  background-color: #4A6FDE;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.testimonial-carousel .carousel-control-prev,
+.testimonial-carousel .carousel-control-next {
+  width: 40px;
+  height: 40px;
+  background-color: #4A6FDE;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.testimonial-carousel .carousel-control-prev {
+  left: -20px;
+}
+
+.testimonial-carousel .carousel-control-next {
+  right: -20px;
+}
+
+.testimonial-carousel .carousel-control-prev:hover,
+.testimonial-carousel .carousel-control-next:hover {
+  opacity: 1;
+}
+
+.testimonial-image img {
+  object-fit: cover;
+  border: 3px solid #4A6FDE;
+}
+
+/* Contact page styles */
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(74, 111, 222, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4A6FDE;
+}
+
+/* Footer styles */
+footer .social-links a {
+  transition: opacity 0.3s ease;
+}
+
+footer .social-links a:hover {
+  opacity: 0.8;
+}
+
+footer .contact-info li {
+  margin-bottom: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .price {
+    font-size: 2rem;
+  }
+  
+  .testimonial-carousel .carousel-control-prev,
+  .testimonial-carousel .carousel-control-next {
+    display: none;
+  }
+  
+  .hero-section {
+    text-align: center;
+  }
+  
+  .hero-section .btn {
+    margin-bottom: 0.5rem;
+  }
+}
+
