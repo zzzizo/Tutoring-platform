@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button, NavDropdown } from 'react-bootstrap';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
-import logo from '../../assets/images/logo.webp'
+import { getDocument } from '../../services/firestoreService';
+import logo from '../../assets/images/logo.webp';
 
 const Header = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!currentUser) return;
+      
+      try {
+        const data = await getDocument('users', currentUser.uid);
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [currentUser]);
 
   const handleLogout = async () => {
     try {
@@ -53,7 +70,7 @@ const Header = () => {
                 title={
                   <span>
                     <FaUserCircle className="me-1" />
-                    {currentUser.email}
+                    {userData ? `${userData.firstName} ${userData.lastName}` : currentUser.email}
                   </span>
                 } 
                 id="user-dropdown"

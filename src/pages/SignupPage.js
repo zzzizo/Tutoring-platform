@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { createDocument } from '../services/firestoreService';
+import { handleAuthError } from '../utils/authErrorHandler';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ const SignupPage = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    age: '',
+    subject: '',
+    focusArea: '',
     agreeTerms: false
   });
   
@@ -22,12 +26,36 @@ const SignupPage = () => {
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
+  // Available subjects
+  const subjects = [
+    { id: 'math', name: 'Mathematics' },
+    { id: 'english', name: 'English' },
+    { id: 'science', name: 'Science' },
+    { id: 'naplan', name: 'NAPLAN Prep' }
+  ];
+  
+  // Focus areas based on selected subject
+  const focusAreas = {
+    math: ['Algebra', 'Geometry', 'Calculus', 'Statistics', 'Number Theory'],
+    english: ['Reading Comprehension', 'Writing', 'Grammar', 'Vocabulary', 'Literature'],
+    science: ['Biology', 'Chemistry', 'Physics', 'Earth Science', 'Astronomy'],
+    naplan: ['Numeracy', 'Reading', 'Writing', 'Language Conventions']
+  };
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prevData => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value
     }));
+    
+    // Reset focus area when subject changes
+    if (name === 'subject') {
+      setFormData(prevData => ({
+        ...prevData,
+        focusArea: ''
+      }));
+    }
   };
   
   const handleSubmit = async (e) => {
@@ -58,6 +86,9 @@ const SignupPage = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        age: formData.age,
+        subject: formData.subject,
+        focusArea: formData.focusArea,
         createdAt: new Date().toISOString()
       });
       
@@ -68,8 +99,7 @@ const SignupPage = () => {
         navigate('/login');
       }, 2000);
     } catch (error) {
-      console.error("Signup error:", error);
-      setError('Failed to create an account. ' + (error.message || 'Please try again.'));
+      setError(handleAuthError(error));
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +127,6 @@ const SignupPage = () => {
                 )}
                 
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                  {/* Form fields remain the same */}
                   <Row>
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="firstName">
@@ -147,6 +176,65 @@ const SignupPage = () => {
                       Please provide a valid email.
                     </Form.Control.Feedback>
                   </Form.Group>
+                  
+                  <Form.Group className="mb-3" controlId="age">
+                    <Form.Label>Age</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="age"
+                      value={formData.age}
+                      onChange={handleChange}
+                      required
+                      min="5"
+                      max="100"
+                      placeholder="Enter your age"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid age.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  
+                  <Form.Group className="mb-3" controlId="subject">
+                    <Form.Label>Subject</Form.Label>
+                    <Form.Select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select a subject</option>
+                      {subjects.map(subject => (
+                        <option key={subject.id} value={subject.id}>
+                          {subject.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    <Form.Control.Feedback type="invalid">
+                      Please select a subject.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  
+                  {formData.subject && (
+                    <Form.Group className="mb-3" controlId="focusArea">
+                      <Form.Label>Focus Area</Form.Label>
+                      <Form.Select
+                        name="focusArea"
+                        value={formData.focusArea}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Select a focus area</option>
+                        {focusAreas[formData.subject]?.map(area => (
+                          <option key={area} value={area}>
+                            {area}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        Please select a focus area.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  )}
                   
                   <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Password</Form.Label>
@@ -209,7 +297,7 @@ const SignupPage = () => {
                   
                   <div className="text-center">
                     <p className="mb-0">
-                      Already have an account? <Link to="/login" className="text-decoration-none">Log in</Link>
+                      Already have an account? <Link to="/login" className="text-decoration-none">Log In</Link>
                     </p>
                   </div>
                 </Form>

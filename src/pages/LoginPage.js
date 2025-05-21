@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { handleAuthError } from '../utils/authErrorHandler';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -50,11 +51,10 @@ const LoginPage = () => {
       await login(formData.email, formData.password);
       
       // Get the redirect path from location state or default to dashboard
-      const from = location.state?.from?.pathname || '/dashboard';
-      navigate(from);
+      const redirectPath = location.state?.from?.pathname || '/dashboard';
+      navigate(redirectPath);
     } catch (error) {
-      console.error("Login error:", error);
-      setError('Failed to log in. ' + (error.message || 'Please check your credentials.'));
+      setError(handleAuthError(error));
     } finally {
       setIsLoading(false);
     }

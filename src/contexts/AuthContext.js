@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
-  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   updateProfile
 } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -66,3 +66,4 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+

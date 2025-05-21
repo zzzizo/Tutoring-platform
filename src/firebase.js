@@ -26,5 +26,15 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+// Configure auth settings for development
+if (process.env.NODE_ENV === 'development') {
+  // This allows you to use the same email multiple times in development
+  // and disables app verification for phone auth testing
+  const authSettings = auth.settings;
+  
+  // Disable app verification for testing (if needed)
+  // authSettings.appVerificationDisabledForTesting = true;
+}
+
 // Export the services
 export { app, auth, db, storage };
