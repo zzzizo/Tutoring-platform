@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   
   const [formData, setFormData] = useState({
     email: '',
@@ -23,7 +25,7 @@ const LoginPage = () => {
     }));
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     
@@ -36,13 +38,14 @@ const LoginPage = () => {
     setError('');
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      // For demo purposes, accept any email/password
-      localStorage.setItem('authToken', 'demo-token-12345');
+    try {
+      await login(formData.email, formData.password);
       navigate('/dashboard');
+    } catch (error) {
+      setError('Failed to log in. ' + error.message);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
   
   return (

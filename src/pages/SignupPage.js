@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { createDocument } from '../services/firestoreService';
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const { signup } = useAuth();
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -15,6 +18,7 @@ const SignupPage = () => {
   });
   
   const [validated, setValidated] = useState(false);
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
   const handleChange = (e) => {
@@ -25,7 +29,7 @@ const SignupPage = () => {
     }));
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     
@@ -36,18 +40,31 @@ const SignupPage = () => {
     }
     
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match");
+      setError("Passwords don't match");
       return;
     }
     
+    setError('');
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      // For demo purposes, just redirect to login
+    try {
+      // Create the user in Firebase Auth
+      const userCredential = await signup(formData.email, formData.password);
+      
+      // Store additional user data in Firestore
+      await createDocument('users', userCredential.user.uid, {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        createdAt: new Date().toISOString()
+      });
+      
       navigate('/login');
+    } catch (error) {
+      setError('Failed to create an account. ' + error.message);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
   
   return (

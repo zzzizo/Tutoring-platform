@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const ForgotPasswordPage = () => {
+  const { resetPassword } = useAuth();
   const [email, setEmail] = useState('');
   const [validated, setValidated] = useState(false);
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     
@@ -17,13 +21,18 @@ const ForgotPasswordPage = () => {
       return;
     }
     
-    // Simulate API call
+    setMessage('');
+    setError('');
     setSubmitStatus('loading');
     
-    setTimeout(() => {
-      // In a real app, this would be an API call to send a reset email
+    try {
+      await resetPassword(email);
+      setMessage('Check your email for further instructions');
       setSubmitStatus('success');
-    }, 1500);
+    } catch (error) {
+      setError('Failed to reset password. ' + error.message);
+      setSubmitStatus(null);
+    }
   };
 
   return (
