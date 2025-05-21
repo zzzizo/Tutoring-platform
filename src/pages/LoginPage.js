@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const location = useLocation();
+  const { login, currentUser } = useAuth();
   
   const [formData, setFormData] = useState({
     email: '',
@@ -16,6 +17,13 @@ const LoginPage = () => {
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/dashboard');
+    }
+  }, [currentUser, navigate]);
   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,9 +48,13 @@ const LoginPage = () => {
     
     try {
       await login(formData.email, formData.password);
-      navigate('/dashboard');
+      
+      // Get the redirect path from location state or default to dashboard
+      const from = location.state?.from?.pathname || '/dashboard';
+      navigate(from);
     } catch (error) {
-      setError('Failed to log in. ' + error.message);
+      console.error("Login error:", error);
+      setError('Failed to log in. ' + (error.message || 'Please check your credentials.'));
     } finally {
       setIsLoading(false);
     }

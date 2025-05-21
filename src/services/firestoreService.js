@@ -1,21 +1,21 @@
+import { db } from '../firebase';
 import { 
   collection, 
   doc, 
-  setDoc, 
   getDoc, 
   getDocs, 
+  setDoc, 
   updateDoc, 
+  addDoc, 
   deleteDoc, 
   query, 
   where 
 } from 'firebase/firestore';
-import { db } from '../firebase';
 
-// Create a new document
+// Create a new document with a specified ID
 export const createDocument = async (collectionName, docId, data) => {
   try {
-    const docRef = doc(db, collectionName, docId);
-    await setDoc(docRef, data);
+    await setDoc(doc(db, collectionName, docId), data);
     return { id: docId, ...data };
   } catch (error) {
     console.error("Error creating document:", error);
@@ -23,11 +23,21 @@ export const createDocument = async (collectionName, docId, data) => {
   }
 };
 
+// Create a new document with auto-generated ID
+export const addDocument = async (collectionName, data) => {
+  try {
+    const docRef = await addDoc(collection(db, collectionName), data);
+    return { id: docRef.id, ...data };
+  } catch (error) {
+    console.error("Error adding document:", error);
+    throw error;
+  }
+};
+
 // Get a document by ID
 export const getDocument = async (collectionName, docId) => {
   try {
-    const docRef = doc(db, collectionName, docId);
-    const docSnap = await getDoc(docRef);
+    const docSnap = await getDoc(doc(db, collectionName, docId));
     
     if (docSnap.exists()) {
       return { id: docSnap.id, ...docSnap.data() };

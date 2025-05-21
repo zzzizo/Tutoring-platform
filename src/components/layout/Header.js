@@ -1,23 +1,32 @@
 import React from 'react';
 import { Navbar, Nav, Container, Button, NavDropdown } from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
-import { placeholderImages } from '../../utils/placeholderImages';
+import { useAuth } from '../../contexts/AuthContext';
+import logo from '../../assets/images/logo.webp'
 
 const Header = () => {
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <Navbar bg="white" expand="lg" className="shadow-sm py-3">
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img 
-            src={placeholderImages.logo}
+            src={logo}
             alt="AI Tutoring Platform" 
             height="30" 
             className="d-inline-block align-top"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = 'https://via.placeholder.com/120x30?text=AI+Tutor';
-            }}
           />
         </Navbar.Brand>
         
@@ -39,12 +48,30 @@ const Header = () => {
           </Nav>
           
           <div className="d-flex align-items-center">
-            <Button as={Link} to="/login" variant="outline-primary" className="me-2">
-              Log In
-            </Button>
-            <Button as={Link} to="/signup" variant="primary">
-              Sign Up
-            </Button>
+            {currentUser ? (
+              <NavDropdown 
+                title={
+                  <span>
+                    <FaUserCircle className="me-1" />
+                    {currentUser.email}
+                  </span>
+                } 
+                id="user-dropdown"
+              >
+                <NavDropdown.Item as={Link} to="/dashboard">Dashboard</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <>
+                <Button as={Link} to="/login" variant="outline-primary" className="me-2">
+                  Log In
+                </Button>
+                <Button as={Link} to="/signup" variant="primary">
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </Navbar.Collapse>
       </Container>
@@ -53,4 +80,3 @@ const Header = () => {
 };
 
 export default Header;
-

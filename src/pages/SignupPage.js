@@ -19,6 +19,7 @@ const SignupPage = () => {
   
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
   const handleChange = (e) => {
@@ -45,6 +46,7 @@ const SignupPage = () => {
     }
     
     setError('');
+    setSuccess('');
     setIsLoading(true);
     
     try {
@@ -59,9 +61,15 @@ const SignupPage = () => {
         createdAt: new Date().toISOString()
       });
       
-      navigate('/login');
+      setSuccess('Account created successfully! Redirecting to login...');
+      
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (error) {
-      setError('Failed to create an account. ' + error.message);
+      console.error("Signup error:", error);
+      setError('Failed to create an account. ' + (error.message || 'Please try again.'));
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +84,20 @@ const SignupPage = () => {
               <Card.Body className="p-4 p-md-5">
                 <h1 className="text-center mb-4">Create Account</h1>
                 
+                {error && (
+                  <Alert variant="danger" className="mb-4">
+                    {error}
+                  </Alert>
+                )}
+                
+                {success && (
+                  <Alert variant="success" className="mb-4">
+                    {success}
+                  </Alert>
+                )}
+                
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                  {/* Form fields remain the same */}
                   <Row>
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="firstName">
@@ -202,10 +223,3 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
-
-
-
-
-
-
-
