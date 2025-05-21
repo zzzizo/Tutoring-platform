@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { preload } from 'react-dom/preload';
 import { placeholderImages } from '../utils/placeholderImages';
 
 const SubjectCard = ({ subject }) => {
@@ -21,11 +20,11 @@ const SubjectCard = ({ subject }) => {
     }
   };
   
-  // Preload the subject detail image when hovering over the card
+  // Replace preload with a manual image preloading approach
   const handleMouseEnter = () => {
-    // In a real app, you would preload actual images
-    // For now, we're just demonstrating the preload API
-    preload(`/assets/subjects/${id}-detail.jpg`, { as: "image" });
+    // Create a new image object to preload the image
+    const img = new Image();
+    img.src = `/assets/subjects/${id}-detail.jpg`;
   };
   
   return (
@@ -58,6 +57,8 @@ const SubjectCard = ({ subject }) => {
 };
 
 export default SubjectCard;
+
+
 
 
 
