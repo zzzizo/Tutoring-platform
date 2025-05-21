@@ -3,6 +3,8 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { getSubjectImage } from '../utils/placeholderImages';
+import math from '../assets/images/math.png';
+import history from '../assets/images/history.png';
 
 const SubjectsPage = () => {
   // Subject data
@@ -11,7 +13,7 @@ const SubjectsPage = () => {
       id: "math",
       title: "Mathematics",
       description: "From basic arithmetic to advanced calculus, our AI adapts to your child's level.",
-      img: "https://img.icons8.com/color/60/000000/math.png",
+      img: math,
       color: "#E3F2FD"
     },
     {
@@ -39,6 +41,7 @@ const SubjectsPage = () => {
       id: "history",
       title: "History",
       description: "Journey through time with engaging lessons on world history, civilizations, and important events.",
+      img: history,
       color: "#FFEBEE"
     },
     {

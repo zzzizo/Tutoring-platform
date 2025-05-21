@@ -6,6 +6,10 @@ import heroImage from '../assets/images/hero-image.avif';
 import iconPersonalized from '../assets/images/icon-personalized.png';
 import iconFeedback from '../assets/images/icon-feedback.png';
 import iconProgress from '../assets/images/icon-progress.png';
+import math from '../assets/images/math.png';
+import english from '../assets/images/english.png';
+import naplan from '../assets/images/naplan.png';
+import { placeholderImages } from '../utils/placeholderImages';
 
 const HomePage = () => {
   // Testimonial data
@@ -14,7 +18,7 @@ const HomePage = () => {
       id: 1,
       name: "Sarah Johnson",
       role: "Parent of 10th grader",
-      image: "/testimonial-1.jpg",
+      image: placeholderImages.testimonials.testimonial1,
       quote: "My daughter's math scores improved dramatically after just 2 months. The personalized approach really works!",
       rating: 5
     },
@@ -22,7 +26,7 @@ const HomePage = () => {
       id: 2,
       name: "Michael Chen",
       role: "Parent of 7th grader",
-      image: "/testimonial-2.jpg",
+      image: placeholderImages.testimonials.testimonial2,
       quote: "The AI tutor identified my son's learning gaps and created a custom plan that helped him catch up quickly.",
       rating: 5
     },
@@ -30,7 +34,7 @@ const HomePage = () => {
       id: 3,
       name: "Jessica Williams",
       role: "Parent of 9th grader",
-      image: "/testimonial-3.jpg",
+      image: placeholderImages.testimonials.testimonial3,
       quote: "My son actually enjoys studying now! The interactive lessons keep him engaged in a way traditional homework never did.",
       rating: 4
     }
@@ -42,21 +46,21 @@ const HomePage = () => {
       id: "math",
       title: "Mathematics",
       description: "From basic arithmetic to advanced calculus, our AI adapts to your child's level.",
-      image: "/subject-math.png",
+      image: math,
       color: "#E3F2FD"
     },
     {
       id: "english",
       title: "English",
       description: "Improve reading comprehension, writing skills, and grammar through personalized lessons.",
-      image: "/subject-english.png",
+      image: english,
       color: "#F3E5F5"
     },
     {
       id: "naplan",
       title: "NAPLAN Prep",
       description: "Targeted preparation for Australia's National Assessment Program tests.",
-      image: "/subject-naplan.png",
+      image: naplan,
       color: "#E8F5E9"
     }
   ];
@@ -207,13 +211,9 @@ const HomePage = () => {
                   </Col>
                   <Col md={6}>
                     <img 
-                      src="/step-1.jpg" 
+                      src={placeholderImages.steps.step1} 
                       alt="Assessment" 
                       className="img-fluid rounded shadow"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://via.placeholder.com/500x300?text=Step+1';
-                      }}
                     />
                   </Col>
                 </Row>
@@ -227,13 +227,9 @@ const HomePage = () => {
                   </Col>
                   <Col md={6}>
                     <img 
-                      src="/step-2.jpg" 
+                      src={placeholderImages.steps.step2} 
                       alt="Personalized Plan" 
                       className="img-fluid rounded shadow"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://via.placeholder.com/500x300?text=Step+2';
-                      }}
                     />
                   </Col>
                 </Row>
@@ -247,13 +243,9 @@ const HomePage = () => {
                   </Col>
                   <Col md={6}>
                     <img 
-                      src="/step-3.jpg" 
+                      src={placeholderImages.steps.step3}
                       alt="Learning" 
                       className="img-fluid rounded shadow"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://via.placeholder.com/500x300?text=Step+3';
-                      }}
                     />
                   </Col>
                 </Row>

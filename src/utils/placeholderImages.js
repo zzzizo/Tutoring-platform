@@ -1,32 +1,55 @@
 // Consistent placeholder images to avoid hydration mismatches
 
+// Import images directly from the assets folder
+import logo from '../assets/images/logo.webp';
+import avatar from '../assets/images/avatar.webp';
+import mathImg from '../assets/images/math.png';
+import mathDetailImg from '../assets/images/math.webp';
+import englishImg from '../assets/images/english.png';
+import scienceImg from '../assets/images/science.png';
+import historyImg from '../assets/images/history.png';
+import naplanImg from '../assets/images/naplan.png';
+import defaultImg from '../assets/images/default.webp';
+import heroImg from '../assets/images/hero-image.jpg';
+import testimonialBg from '../assets/images/testimonial-bg.jpg';
+import step1 from '../assets/images/step-1.jpg';
+import step2 from '../assets/images/step-2.jpg';
+import step3 from '../assets/images/step-3.jpg';
+import testimonial1 from '../assets/images/testimonial-1.jpg';
+import testimonial2 from '../assets/images/testimonial-2.jpg';
+import testimonial3 from '../assets/images/testimonial-3.jpg';
+import iconPersonalize from '../assets/images/icon-personalized.png';
+import iconFlexible from '../assets/images/icon-flexible.jpg';
+import iconResults from '../assets/images/icon-results.webp';
+
 export const placeholderImages = {
-  logo: '/logo.png',
-  avatar: '/avatar-placeholder.png',
+  logo: logo,
+  avatar: avatar,
   subject: {
-    math: '/subject-math.png',
-    english: '/subject-english.png',
-    science: '/subject-science.png',
-    history: '/subject-history.png',
-    naplan: '/subject-naplan.png',
-    default: '/subject-default.png'
+    math: mathImg,
+    math_detail: mathDetailImg,
+    english: englishImg,
+    science: scienceImg,
+    history: historyImg,
+    naplan: naplanImg,
+    default: defaultImg
   },
-  hero: '/hero-image.jpg',
-  testimonial: '/testimonial-bg.jpg',
+  hero: heroImg,
+  testimonial: testimonialBg,
   steps: {
-    step1: '/step-1.jpg',
-    step2: '/step-2.jpg',
-    step3: '/step-3.jpg'
+    step1: step1,
+    step2: step2,
+    step3: step3
   },
   testimonials: {
-    testimonial1: '/testimonial-1.jpg',
-    testimonial2: '/testimonial-2.jpg',
-    testimonial3: '/testimonial-3.jpg'
+    testimonial1: testimonial1,
+    testimonial2: testimonial2,
+    testimonial3: testimonial3
   },
   icons: {
-    personalized: '/icon-personalize.png',
-    flexible: '/icon-flexible.png',
-    results: '/icon-results.png'
+    personalized: iconPersonalize,
+    flexible: iconFlexible,
+    results: iconResults
   }
 };
 
@@ -34,4 +57,6 @@ export const placeholderImages = {
 export const getSubjectImage = (subjectId) => {
   return placeholderImages.subject[subjectId] || placeholderImages.subject.default;
 };
+
+
 

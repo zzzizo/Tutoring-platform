@@ -70,7 +70,7 @@ const ResourcePreloader = () => {
     // Preload subject images
     const popularSubjects = ['math', 'english', 'science'];
     popularSubjects.forEach(subject => {
-      preloadImage(`/assets/subjects/${subject}.jpg`);
+      preloadImage(`/assets/subjects/${subject}.webp`);
     });
     
   }, []);

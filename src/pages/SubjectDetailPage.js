@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { getSubjectImage } from '../utils/placeholderImages';
 // import { preload, preloadModule } from 'react-dom';
 
 // Sample subject data (in a real app, this would come from an API)
@@ -11,7 +12,7 @@ const subjectsData = {
     description: 'Our mathematics curriculum builds strong foundations in number sense, algebra, geometry, and more through interactive and adaptive lessons tailored to your child\'s learning style.',
     icon: '📊',
     color: '#4A6FDE',
-    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb',
+    image: getSubjectImage("math_detail"),
     relatedSubjects: ['english', 'naplan'],
     topics: [
       {
