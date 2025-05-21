@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { preload, preloadModule } from 'react-dom';
+// import { preload, preloadModule } from 'react-dom';
 
 // Sample subject data (in a real app, this would come from an API)
 const subjectsData = {
@@ -324,23 +324,28 @@ const SubjectDetailPage = () => {
   // Preload related subjects' images when the component mounts
   useEffect(() => {
     if (subject && subject.relatedSubjects) {
-      // Preload related subjects' images
+      // Manual preload related subjects' images
       subject.relatedSubjects.forEach(relatedId => {
         if (subjectsData[relatedId]) {
-          preload(subjectsData[relatedId].image, { as: "image" });
+          const img = new Image();
+          img.src = subjectsData[relatedId].image;
         }
       });
-      
-      // Preload the assessment module that might be used if user clicks "Take Assessment"
-      preloadModule("/assets/assessment-module.js", { as: "script" });
     }
   }, [subject]);
 
   // Preload topic content when user hovers over a topic
   const handleTopicHover = (topicId) => {
-    // Preload topic-specific resources
-    preload(`/assets/topics/${topicId}/topic-image.jpg`, { as: "image" });
-    preload(`/assets/topics/${topicId}/topic-styles.css`, { as: "style" });
+    // Manual preload topic-specific resources
+    const img = new Image();
+    img.src = `/assets/topics/${topicId}/topic-image.jpg`;
+    
+    // For CSS preloading
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = `/assets/topics/${topicId}/topic-styles.css`;
+    link.as = 'style';
+    document.head.appendChild(link);
   };
 
   useEffect(() => {
@@ -415,7 +420,13 @@ const SubjectDetailPage = () => {
                   to="/test-now" 
                   variant="primary" 
                   size="lg"
-                  onMouseEnter={() => preload('/assets/assessment-intro.js', { as: 'script' })}
+                  onMouseEnter={() => {
+                    const script = document.createElement('link');
+                    script.rel = 'preload';
+                    script.href = '/assets/assessment-intro.js';
+                    script.as = 'script';
+                    document.head.appendChild(script);
+                  }}
                 >
                   Take Free Assessment
                 </Button>
@@ -424,7 +435,13 @@ const SubjectDetailPage = () => {
                   to="/signup" 
                   variant="outline-primary" 
                   size="lg"
-                  onMouseEnter={() => preload('/assets/signup-form.css', { as: 'style' })}
+                  onMouseEnter={() => {
+                    const link = document.createElement('link');
+                    link.rel = 'preload';
+                    link.href = '/assets/signup-form.css';
+                    link.as = 'style';
+                    document.head.appendChild(link);
+                  }}
                 >
                   Start Learning
                 </Button>
@@ -592,5 +609,9 @@ const SubjectDetailPage = () => {
 };
 
 export default SubjectDetailPage;
+
+
+
+
 
 
