@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { preload } from 'react-dom';
+import { preload } from 'react-dom/preload';
 import { placeholderImages } from '../utils/placeholderImages';
 
 const SubjectCard = ({ subject }) => {
@@ -58,6 +58,7 @@ const SubjectCard = ({ subject }) => {
 };
 
 export default SubjectCard;
+
 
 
 
