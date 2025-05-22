@@ -7,14 +7,14 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBXvIoSwIet5DTqSHgxAuh6Nadrwq9xAJU",
-  authDomain: "ai-tutoring-platform-ebdfd.firebaseapp.com",
-  databaseURL: "https://ai-tutoring-platform-ebdfd-default-rtdb.firebaseio.com",
-  projectId: "ai-tutoring-platform-ebdfd",
-  storageBucket: "ai-tutoring-platform-ebdfd.firebasestorage.app",
-  messagingSenderId: "198988972257",
-  appId: "1:198988972257:web:bece15dcac29085dd477a0",
-  measurementId: "G-MB4D7HHM7T"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'development') {
   // This allows you to use the same email multiple times in development
   // and disables app verification for phone auth testing
   const authSettings = auth.settings;
-  
+
   // Disable app verification for testing (if needed)
   // authSettings.appVerificationDisabledForTesting = true;
 }
